@@ -48,6 +48,7 @@ class Directory extends React.Component {
     render() {
         return (
             <div className="directory-menu">
+            {/* Here we use the REST OPERATOR: "...". */}
             {
                 this.state.sections.map(({id, ...otherSectionProps}) => (
                     <MenuItem key={id} {...otherSectionProps}/>
