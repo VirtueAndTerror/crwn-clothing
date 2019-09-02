@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import './App.css';
@@ -7,10 +7,12 @@ import HomePage from './pages/hompage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 import Header from './components/header/header.component'
-import { auth } from './firebase/firebase.utils.js';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils.js';
 
-
-class App extends React.Component {
+// 'extends' means that 'App' class will inherit all the methods available in the 'Component class'.
+// '.super()' calls the constuctor of the parent-class form wich 'App' is a sub-class(child-class).
+// 'class' is a sintátical sugar for 'Constructor Function'.
+class App extends Component {
   constructor(){
     super();
 
@@ -21,14 +23,28 @@ class App extends React.Component {
 
   unsubscribeFromAuth = null
 
-  //The code breaks here!
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-      
-      console.log(user);
-      
-    })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+     if (userAuth) {
+       const userRef = await createUserProfileDocument(userAuth);
+
+       userRef.onSnapshot(snapShot => {
+         this.setState({
+           currentUser: {
+             id: snapShot.id,
+             ...snapShot.data()
+           }
+         }, () => {
+           console.log(this.state);
+         }
+        );
+      });
+         
+     } else {
+       //If userAuth is false then... to null.
+       this.setState({currentUser:userAuth});
+     }
+    });
   }
 
   componentWillUnmount() {
@@ -49,4 +65,5 @@ class App extends React.Component {
   }
 }
 
+// The main object exportet from a module.
 export default App;
