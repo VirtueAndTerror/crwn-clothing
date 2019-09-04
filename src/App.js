@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -48,16 +48,22 @@ const { setCurrentUser } = this.props;
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUpPage} />
+          <Route exact path="/signin" render={() => this.props.currentUser ?
+           (<Redirect to='/'/>) : (<SignInAndSignUpPage/>)} />
         </Switch>
       </div>
     );
   }
-}
+
+}// Destructuring our userRecucer off of our state. 
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
  setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
 // 'default' means the main object exported from a module.
-export default connect(null, mapDispatchToProps )(App);
+export default connect(mapStateToProps, mapDispatchToProps )(App);
+//We pass it to .connect(), so we have access to state.props.currentUser
