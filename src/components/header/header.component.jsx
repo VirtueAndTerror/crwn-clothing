@@ -41,7 +41,7 @@ const Header = ({ currentUser, hidden }) => (
 
 
 // Section 8: 100.connect() and mapStateToProps()
-// We will use these whenever we need properties from our reducers.
+// We will extract whenever we need properties from our reducers.
 // .connect is a Higher Order Component that takes 2 args.
 const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
   currentUser,

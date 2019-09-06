@@ -7,3 +7,9 @@ export const toggleCartHidden = () => ({
 });
 
 //payload is an optional property in our action object.
+
+export const addItem = item => ({
+    type: CartActionTypes.ADD_ITEM,
+    payload: item
+});
+

@@ -55,7 +55,8 @@ const { setCurrentUser } = this.props;
     );
   }
 
-}// Destructuring our userRecucer off of our state. 
+}
+// Destructuring our userRecucer off of our state. mapStateToPorps selects the part of data form the store that connected component needs. It is defined as a functions which returns a plain object contianing the data that the component needs. The fist argument is the Redux store state, the second are the component ownProps.
 const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser
 })
@@ -65,5 +66,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // 'default' means the main object exported from a module.
-export default connect(mapStateToProps, mapDispatchToProps )(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 //We pass it to .connect(), so we have access to state.props.currentUser
