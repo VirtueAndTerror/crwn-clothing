@@ -1,3 +1,4 @@
+//Reselect.js library contains memoized funtions we are going to use.
 import { createSelector } from 'reselect';
 
 
@@ -5,7 +6,8 @@ import { createSelector } from 'reselect';
 const selectCart = state => state.cart;
 
 export const selectCartItems = createSelector(
-    [selectCart],
+    [selectCart],  
+//the callback is called only when something in the array of inputs changes thanks to relect.js.
     cart => cart.cartItems
 
 );
