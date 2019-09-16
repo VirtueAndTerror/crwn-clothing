@@ -12,11 +12,10 @@ import CheckOutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils.js';
+import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils.js';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
-
 // 'extends' means that 'App' class will inherit all the methods available in the 'Component class'.
 // '.super()' calls the constuctor of the parent-class form wich 'App' is a sub-class(child-class).
 // 'class' is a sintátical sugar for 'Constructor Function'.
@@ -39,6 +38,7 @@ const { setCurrentUser } = this.props;
       } else {
        //If userAuth is false then... to null.
        setCurrentUser(userAuth);
+       
      }
     });
   }
@@ -65,7 +65,7 @@ const { setCurrentUser } = this.props;
 }
 // Destructuring our userRecucer off of our state. mapStateToPorps selects the part of data form the store that connected component needs. It is defined as a functions which returns a plain object contianing the data that the component needs. The fist argument is the Redux store state, the second are the component ownProps.
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
